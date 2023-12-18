@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <title>Activate User</title>
+  <style>
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .form-section, .response-section {
+      width: 45%;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="form-section">
+    <h1>Activate User</h1>
+    <label for="username"></label><input type="text" id="username" placeholder="Username"><br>
+    <label for="token"></label><input type="number" id="token" placeholder="Token"><br>
+    <button id="activateUserButton">Activate User</button>
+  </div>
+  <div class="response-section">
+    <h1>Response</h1>
+    <div id="response"></div>
+  </div>
+</div>
+
+<script type="module" src="activate_user.js"></script>
+</body>
+</html>
+

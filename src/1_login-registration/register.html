@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registration</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-section, .response-section {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-section">
+        <h1>Registration</h1>
+        <label for="username"></label><input type="text" id="username" placeholder="Username"><br>
+        <label for="nickname"></label><input type="text" id="nickname" placeholder="Nickname"><br>
+        <label for="password"></label><input type="password" id="password" placeholder="Password"><br>
+        <label for="email"></label><input type="email" id="email" placeholder="Email"><br>
+        <button id="createUserButton">Registration</button>
+    </div>
+    <div class="response-section">
+        <h1>Response</h1>
+        <div id="response"></div>
+    </div>
+</div>
+
+<script type="module" src="register.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mock Client</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const GlobalSettings = {
+        apiUrl: 'http://localhost:8080/api'
+    };
+</script>
+
+<h1>API Mock Client</h1>
+
+<label for="sectionSelector"></label><select id="sectionSelector" onchange="toggleSection()">
+    <option value="all">Show All</option>
+    <option value="imprint">Imprint</option>
+    <option value="login">Registration & Activation & Login</option>
+</select>
+
+<div id="imprintSection">
+    <h2>Imprint</h2>
+    <iframe src="1_imprint/imprint.html" width="100%" height="200px"></iframe>
+</div>
+
+<div id="loginSection">
+    <h2>Registration & Activation & Login</h2>
+    <iframe src="1_login-registration/register.html" width="100%" height="300px"></iframe>
+    <iframe src="1_login-registration/resend_token.html" width="100%" height="200px"></iframe>
+    <iframe src="1_login-registration/activate_user.html" width="100%" height="200px"></iframe>
+    <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
+    <!-- Add more components to 1_login-registration here -->
+</div>
+
+<!-- Add more parts here -->
+
+<script>
+    function toggleSection() {
+        let selectedValue = document.getElementById('sectionSelector').value;
+        document.getElementById('imprintSection').classList.toggle('hidden', selectedValue !== 'imprint' && selectedValue !== 'all');
+        document.getElementById('loginSection').classList.toggle('hidden', selectedValue !== 'login' && selectedValue !== 'all');
+    }
+</script>
+</body>
+</html>
