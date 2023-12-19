@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  push:
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,3 @@ jobs:
           
           # Copy new files from src to the target directory
           scp -r src/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_DIRECTORY }}
-
-      - name: Start application
-        run: |
-          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'foo'
