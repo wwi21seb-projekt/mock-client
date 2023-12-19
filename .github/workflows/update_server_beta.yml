@@ -29,3 +29,6 @@ jobs:
           
           # Copy new files from src to the target directory
           scp -r src/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:${{ secrets.SERVER_DIRECTORY }}
+
+      - name: Change API URL
+        run: ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} '/home/update_api_url.sh'
