@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search User</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-section, .response-section {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-section">
+        <h1>Search User</h1>
+        <label for="username"></label><input type="text" id="username" placeholder="Username"><br>
+        <button id="search">Search</button>
+    </div>
+    <div class="response-section">
+        <h1>Response</h1>
+        <div id="response"></div>
+        <button id="prevPage">← Previous Page</button>
+        <button id="nextPage">Next Page →</button>
+    </div>
+</div>
+
+<script type="module" src="search_user.js"></script>
+</body>
+</html>

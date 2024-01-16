@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Posts</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .form-section, .response-section {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-section">
+        <h1>Create Posts</h1>
+        <label for="content"></label><input type="text" id="content" placeholder="Content"><br>
+        <input type="file" id="image" accept="image/*"><br>
+        <button id="createPost">Create Post</button>
+    </div>
+    <div class="response-section">
+        <h1>Response</h1>
+        <div id="response"></div>
+    </div>
+</div>
+
+<script type="module" src="create_post.js"></script>
+</body>
+</html>
+

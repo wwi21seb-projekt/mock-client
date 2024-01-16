@@ -16,7 +16,11 @@
 <label for="sectionSelector"></label><select id="sectionSelector" onchange="toggleSection()">
     <option value="all">Show All</option>
     <option value="imprint">Imprint</option>
-    <option value="login">Registration & Activation & Login</option>
+    <option value="login_registration">Registration & Activation & Login</option>
+    <option value="create_post">Create Post</option>
+    <option value="account_configuration">Account Configuration</option>
+    <option value="user_profile">User Profile</option>
+    <option value="generated_feed">Generated Feed</option>
 </select>
 
 <div id="imprintSection">
@@ -33,13 +37,50 @@
     <!-- Add more components to 1_login-registration here -->
 </div>
 
+<div id="createPostSection">
+    <h2>Create Post</h2>
+    <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
+    <iframe src="2_posts/create_posts.html" width="100%" height="200px"></iframe>
+</div>
+
+<div id="accountConfigurationSection">
+    <h2>Account Configuration</h2>
+    <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
+    <iframe src="2_account-configuration/change_trivial_information.html" width="100%" height="200px"></iframe>
+    <iframe src="2_account-configuration/change_password.html" width="100%" height="200px"></iframe>
+    <!-- Add more components to 2_account-configuration here -->
+</div>
+
+<div id="userProfile">
+    <h2>User Profile</h2>
+    <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
+    <iframe src="2_user-feed-subscription/search_user.html" width="100%" height="200px"></iframe>
+    <iframe src="2_user-feed-subscription/visit_user_profile.html" width="100%" height="200px"></iframe>
+    <iframe src="2_user-feed-subscription/subscribe_user.html" width="100%" height="200px"></iframe>
+    <iframe src="2_user-feed-subscription/unsubscribe_user.html" width="100%" height="200px"></iframe>
+    <!-- Add more components to 2_account-configuration here -->
+</div>
+
+<div id="generatedFeed">
+    <h2>Generated Feed</h2>
+    <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
+    <iframe src="2_personal-global-feed/personal_global_feed.html" width="100%" height="200px"></iframe>
+</div>
 <!-- Add more parts here -->
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleSection();
+    });
+
     function toggleSection() {
         let selectedValue = document.getElementById('sectionSelector').value;
         document.getElementById('imprintSection').classList.toggle('hidden', selectedValue !== 'imprint' && selectedValue !== 'all');
-        document.getElementById('loginSection').classList.toggle('hidden', selectedValue !== 'login' && selectedValue !== 'all');
+        document.getElementById('loginSection').classList.toggle('hidden', selectedValue !== 'login_registration' && selectedValue !== 'all');
+        document.getElementById('createPostSection').classList.toggle('hidden', selectedValue !== 'create_post' && selectedValue !== 'all');
+        document.getElementById('accountConfigurationSection').classList.toggle('hidden', selectedValue !== 'account_configuration' && selectedValue !== 'all');
+        document.getElementById('userProfile').classList.toggle('hidden', selectedValue !== 'user_profile' && selectedValue !== 'all');
+        document.getElementById('generatedFeed').classList.toggle('hidden', selectedValue !== 'generated_feed' && selectedValue !== 'all');
     }
 </script>
 </body>
