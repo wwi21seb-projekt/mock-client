@@ -21,70 +21,90 @@ document.getElementById("prevPage").addEventListener("click", function() {
 
 function openUser() {
     const username = document.getElementById('username').value;
+    const token = localStorage.getItem('token')
 
-    // fetch user profile information first
-    fetch(GlobalSettings.apiUrl+'/users/'+username, {
-        method: 'POST',
+    // fetch user profile information
+    fetch(GlobalSettings.apiUrl + '/users/' + username, {
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
         }
     })
         .then(response => {
-            return response.json().then(json => ({
-                status: response.status,
-                json
-            }));
+            if (response.ok) {
+                return response.json().then(json => ({
+                    status: response.status,
+                    json
+                }));
+            } else {
+                throw new Error('Network response was not ok.');
+            }
         })
         .then(({ status, json }) => {
             document.getElementById('response').innerHTML =
                 '<strong>Status Code:</strong> ' + status + '<br>' +
                 '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
-
-            if (status === 200) {
-                localStorage.setItem('token', json.token); // store token in local storage
-            }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
 
     // fetch user posts
-    const url = GlobalSettings.apiUrl+'/posts?username=' + username + '&offset=' + offset + '&limit=' + limit
+    const url = GlobalSettings.apiUrl+'/users/' + username + '/feed?offset=' + offset + '&limit=' + limit
     fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
         },
     })
         .then(response => {
-            response.json()
+            const statusCode = response.status;
+            return response.json().then(data => ({ data, statusCode }));
         })
-        .then(data => {
-            displayResults(data);
+        .then(({ data, statusCode }) => {
+            displayResults(data, statusCode);
         })
         .catch(error => console.error('Error:', error));
 }
 
-function displayResults(data) {
+function displayResults(data, statusCode) {
     const responseDiv = document.getElementById('responseFeed')
     responseDiv.innerHTML = ''
 
     // if status code is not 200, display error message
-    if (data.statusCode !== 200) {
-        responseDiv.innerHTML = '<strong>Status Code:</strong> ' + data.statusCode + '<br>' +
-            '<pre>' + JSON.stringify(data.message, null, 2) + '</pre>';
+    if (statusCode !== 200) {
+        responseDiv.innerHTML = '<strong>Status Code:</strong> ' + statusCode + '<br>' +
+            '<pre>' + JSON.stringify(data.error, null, 2) + '</pre>';
         return
     }
 
     if (data.records && data.records.length > 0) {
         const startRecord = offset + 1
         const endRecord = offset + data.records.length
-        responseDiv.innerHTML += 'Shown records ' + startRecord + ' - ' + endRecord + 'of' + data.pagination.records + '<br><br>'
+        responseDiv.innerHTML += 'Shown records ' + startRecord + ' - ' + endRecord + ' of ' + data.pagination.records + '<br><br>'
 
         data.records.forEach(post => {
             const postDiv = document.createElement('div');
-            postDiv.innerHTML = `PostId: ${post.postId} Content: ${post.content}, Creation Date: ${post.creationDate}`;
+
+            const contentHTML = `
+        <div class="post-header">
+            <h3>Post ID: ${post.postId}</h3>
+        </div>
+        <div class="post-content">
+            <p>${post.content}</p>
+        </div>
+        <div class="post-footer">
+            <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+        </div>
+    `;
+
+            postDiv.innerHTML = contentHTML;
             responseDiv.appendChild(postDiv);
         });
     } else {
-        responseDiv.innerHTML = 'No users found';
+        responseDiv.innerHTML = 'No posts found';
     }
 }

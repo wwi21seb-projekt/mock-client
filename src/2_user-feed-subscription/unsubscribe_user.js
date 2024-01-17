@@ -6,7 +6,7 @@ function unsubscribe() {
     const subscriptionId = document.getElementById('subscriptionId').value;
     const token = localStorage.getItem('token')
 
-    const url = GlobalSettings.apiUrl+'/subscription/' + subscriptionId
+    const url = GlobalSettings.apiUrl+'/subscriptions/' + subscriptionId
 
     fetch(url, {
         method: 'DELETE',
@@ -16,15 +16,25 @@ function unsubscribe() {
         }
     })
         .then(response => {
-            return response.json().then(json => ({
-                status: response.status,
-                json
-            }));
+            if (response.status === 204) {
+                document.getElementById('response').innerHTML =
+                    '<strong>Status Code:</strong> ' + response.status + '<br>' +
+                    '<pre>' + 'Subscription successfully deleted' + '</pre>';
+                return null;
+            } else {
+                return response.json().then(json => ({
+                    status: response.status,
+                    json
+                }));
+            }
         })
-        .then(({ status, json }) => {
-            document.getElementById('response').innerHTML =
-                '<strong>Status Code:</strong> ' + status + '<br>' +
-                '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+        .then(result => {
+            if (result) {
+                const { status, json } = result;
+                document.getElementById('response').innerHTML =
+                    '<strong>Status Code:</strong> ' + status + '<br>' +
+                    '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            }
         })
         .catch(error => console.error('Error:', error));
 }

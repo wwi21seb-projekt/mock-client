@@ -8,7 +8,7 @@ function subscribe() {
     };
     const token = localStorage.getItem('token')
 
-    fetch(GlobalSettings.apiUrl+'/subscription', {
+    fetch(GlobalSettings.apiUrl+'/subscriptions', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
