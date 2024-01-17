@@ -1,7 +1,7 @@
 import { GlobalSettings } from '../global_settings.js';
 
 let offset = 0
-let limit = 10
+let limit = 2
 
 document.getElementById("search").addEventListener("click", function() {
     offset = 0
@@ -21,38 +21,42 @@ document.getElementById("prevPage").addEventListener("click", function() {
 
 function searchUsers() {
     const username = document.getElementById('username').value;
-    const url = GlobalSettings.apiUrl+'/users?username=' + username + '&offset=' + offset + '&limit=' + limit
+    const url = GlobalSettings.apiUrl + '/users?username=' + username + '&offset=' + offset + '&limit=' + limit;
+
+    const token = localStorage.getItem('token');
 
     fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
         },
     })
         .then(response => {
-            response.json()
+            const statusCode = response.status;
+            return response.json().then(data => ({ data, statusCode }));
         })
-        .then(data => {
-            displayResults(data);
+        .then(({ data, statusCode }) => {
+            displayResults(data, statusCode);
         })
         .catch(error => console.error('Error:', error));
 }
 
-function displayResults(data) {
+function displayResults(data, statusCode) {
     const responseDiv = document.getElementById('response')
     responseDiv.innerHTML = ''
 
     // if status code is not 200, display error message
-    if (data.statusCode !== 200) {
-        responseDiv.innerHTML = '<strong>Status Code:</strong> ' + data.statusCode + '<br>' +
-            '<pre>' + JSON.stringify(data.message, null, 2) + '</pre>';
+    if (statusCode !== 200) {
+        responseDiv.innerHTML = '<strong>Status Code:</strong> ' + statusCode + '<br>' +
+            '<pre>' + JSON.stringify(data.error, null, 2) + '</pre>';
         return
     }
 
     if (data.records && data.records.length > 0) {
         const startRecord = offset + 1
         const endRecord = offset + data.records.length
-        responseDiv.innerHTML += 'Shown records ' + startRecord + ' - ' + endRecord + 'of' + data.pagination.records + '<br><br>'
+        responseDiv.innerHTML += 'Shown records ' + startRecord + ' - ' + endRecord + ' of ' + data.pagination.records + '<br><br>'
 
         data.records.forEach(user => {
             const userDiv = document.createElement('div');

@@ -1,8 +1,8 @@
 import { GlobalSettings } from '../global_settings.js';
 
-document.getElementById("changePassword").addEventListener("click", login)
+document.getElementById("changePassword").addEventListener("click", changePassword)
 
-function login() {
+function changePassword() {
     const changePasswordDTO = {
         oldPassword: document.getElementById('oldPassword').value,
         newPassword: document.getElementById('newPassword').value,
@@ -19,15 +19,23 @@ function login() {
         body: JSON.stringify(changePasswordDTO)
     })
         .then(response => {
-            return response.json().then(json => ({
-                status: response.status,
-                json
-            }));
+            if (response.status === 204) {
+                return { status: response.status, json: {} };
+            } else {
+                return response.json().then(json => ({
+                    status: response.status,
+                    json
+                }));
+            }
         })
         .then(({ status, json }) => {
-            document.getElementById('response').innerHTML =
-                '<strong>Status Code:</strong> ' + status + '<br>' +
-                '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            let responseHTML = '<strong>Status Code:</strong> ' + status + '<br>';
+            if (status !== 204) {
+                responseHTML += '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            } else {
+                responseHTML += 'Password successfully changed.';
+            }
+            document.getElementById('response').innerHTML = responseHTML;
         })
         .catch(error => console.error('Error:', error));
 }
