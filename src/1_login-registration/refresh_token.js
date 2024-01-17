@@ -1,21 +1,18 @@
 import { GlobalSettings } from '../global_settings.js';
 
-document.getElementById("activateUserButton").addEventListener("click", activateUser)
+document.getElementById("refreshTokenButton").addEventListener("click", refreshToken)
 
-function activateUser() {
-
-    const username = document.getElementById('username').value
-
-    const userActivationDTO = {
-        token: document.getElementById('token').value
+function refreshToken() {
+    const refreshRequestDTO = {
+        refreshToken: document.getElementById('refreshToken').value,
     };
 
-    fetch(GlobalSettings.apiUrl+ '/users/'+username+'/activate', {
+    fetch(GlobalSettings.apiUrl+'/users/refresh', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userActivationDTO)
+        body: JSON.stringify(refreshRequestDTO)
     })
         .then(response => {
             return response.json().then(json => ({
@@ -33,5 +30,4 @@ function activateUser() {
             }
         })
         .catch(error => console.error('Error:', error));
-
 }
