@@ -100,7 +100,8 @@ function displayResults(data, statusCode) {
             <p>${post.content}</p>
         </div>
         <div class="post-footer">
-            <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+            <span>Author: ${(post.author.username)}</span>
+            <span>Creation Date: ${(post.creationDate)}</span>
         </div>
     `;
 
