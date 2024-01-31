@@ -15,9 +15,9 @@ function searchPosts() {
     const hashtag = document.getElementById('Hashtag').value;
     let url;
     if(postID){
-        url = GlobalSettings.apiUrl + '/posts/?q=' + hashtag +  '&postId=' + postID + '&limit=' + limit;
+        url = GlobalSettings.apiUrl + '/posts?q=' + hashtag +  '&postId=' + postID + '&limit=' + limit;
     }else{
-        url = GlobalSettings.apiUrl + '/posts/?q=' + hashtag + '&limit=' + limit;
+        url = GlobalSettings.apiUrl + '/posts?q=' + hashtag + '&limit=' + limit;
     }   
 
     const token = localStorage.getItem('token');
@@ -50,21 +50,53 @@ function displayResults(data, statusCode) {
         return
     }
 
-    postID = data.records[data.records.length - 1].postID;
-
     if (data.records && data.records.length > 0) {
-        const startRecord = offset + 1
-        const endRecord = offset + data.records.length
-        responseDiv.innerHTML += 'Shown records ' + startRecord + ' - ' + endRecord + ' of ' + data.pagination.records + '<br><br>'
+        responseDiv.innerHTML += 'Shown records ' + data.records.length + ' of ' + data.pagination.records + '<br><br>'
 
         data.records.forEach(post => {
+            postID = post.postId
             const postDiv = document.createElement('div');
-            postDiv.innerHTML = `PostID: ${post.postID}, Content: ${post.content}`;
+
+            let contentHTML
+            if(post.location != null){
+                contentHTML = `
+                    <div class="post-header">
+                        <h3>Post ID: ${post.postId}</h3>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-footer">
+                        <span>Author: ${(post.author.username)}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Location: ${post.location.longitude}°, ${post.location.latitude}°, ${post.location.accuracy}m</span>
+                    </div>
+                `;
+            } else {
+                contentHTML = `
+                    <div class="post-header">
+                        <h3>Post ID: ${post.postId}</h3>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-footer">
+                        <span>Author: ${(post.author.username)}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+                    </div>
+                    `;
+            }
+
+            postDiv.innerHTML = contentHTML;
             responseDiv.appendChild(postDiv);
         });
-        
     } else {
-        responseDiv.innerHTML = 'No Posts found found';
+        responseDiv.innerHTML = 'No posts found';
     }
-
 }

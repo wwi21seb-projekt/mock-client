@@ -24,10 +24,13 @@ function resendToken() {
             }
         })
         .then(({ status, json }) => {
-            document.getElementById('response').innerHTML =
-                '<strong>Status Code:</strong> ' + status + '<br>' +
-                '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            if (status === 204) {
+                document.getElementById('response').innerHTML =
+                    '<strong>Status Code:</strong> ' + status + '<br>'
+            } else {
+                document.getElementById('response').innerHTML =
+                    '<strong>Status Code:</strong> ' + status + '<br>' +
+                    '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+            }
         })
-        .catch(error => console.error('Error:', error));
-
 }

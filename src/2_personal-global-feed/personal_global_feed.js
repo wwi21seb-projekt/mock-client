@@ -92,18 +92,41 @@ function displayResults(data, statusCode) {
             lastPostId = post.postId
             const postDiv = document.createElement('div');
 
-            const contentHTML = `
-        <div class="post-header">
-            <h3>Post ID: ${post.postId}</h3>
-        </div>
-        <div class="post-content">
-            <p>${post.content}</p>
-        </div>
-        <div class="post-footer">
-            <span>Author: ${(post.author.username)}</span>
-            <span>Creation Date: ${(post.creationDate)}</span>
-        </div>
-    `;
+            let contentHTML
+            if(post.location != null){
+                contentHTML = `
+                    <div class="post-header">
+                        <h3>Post ID: ${post.postId}</h3>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-footer">
+                        <span>Author: ${(post.author.username)}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Location: ${post.location.longitude}°, ${post.location.latitude}°, ${post.location.accuracy}m</span>
+                    </div>
+                `;
+            } else {
+                contentHTML = `
+                    <div class="post-header">
+                        <h3>Post ID: ${post.postId}</h3>
+                    </div>
+                    <div class="post-content">
+                        <p>${post.content}</p>
+                    </div>
+                    <div class="post-footer">
+                        <span>Author: ${(post.author.username)}</span>
+                    </div>
+                    <div class="post-footer">
+                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+                    </div>
+                    `;
+            }
 
             postDiv.innerHTML = contentHTML;
             responseDiv.appendChild(postDiv);
