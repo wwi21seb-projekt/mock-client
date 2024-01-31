@@ -17,7 +17,7 @@
     <option value="all">Show All</option>
     <option value="imprint">Imprint</option>
     <option value="login_registration">Registration & Activation & Login</option>
-    <option value="create_post">Create Post</option>
+    <option value="edit_posts">Edit Posts</option>
     <option value="account_configuration">Account Configuration</option>
     <option value="user_profile">User Profile</option>
     <option value="generated_feed">Feed</option>
@@ -38,10 +38,10 @@
     <!-- Add more components to 1_login-registration here -->
 </div>
 
-<div id="createPostSection">
+<div id="editPostSection">
     <h2>Edit Posts</h2>
     <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
-    <iframe src="2_posts/create_posts.html" width="100%" height="200px"></iframe>
+    <iframe src="2_posts/create_posts.html" width="100%" height="250px"></iframe>
     <iframe src="3_delete-posts/delete_posts.html" width="100%" height="200px"></iframe>
 </div>
 
@@ -82,7 +82,7 @@
         let selectedValue = document.getElementById('sectionSelector').value;
         document.getElementById('imprintSection').classList.toggle('hidden', selectedValue !== 'imprint' && selectedValue !== 'all');
         document.getElementById('loginSection').classList.toggle('hidden', selectedValue !== 'login_registration' && selectedValue !== 'all');
-        document.getElementById('createPostSection').classList.toggle('hidden', selectedValue !== 'create_post' && selectedValue !== 'all');
+        document.getElementById('editPostSection').classList.toggle('hidden', selectedValue !== 'edit_posts' && selectedValue !== 'all');
         document.getElementById('accountConfigurationSection').classList.toggle('hidden', selectedValue !== 'account_configuration' && selectedValue !== 'all');
         document.getElementById('userProfile').classList.toggle('hidden', selectedValue !== 'user_profile' && selectedValue !== 'all');
         document.getElementById('generatedFeed').classList.toggle('hidden', selectedValue !== 'generated_feed' && selectedValue !== 'all');

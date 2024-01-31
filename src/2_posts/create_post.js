@@ -19,12 +19,14 @@ function create_post() {
             };
         } else {
             const accuracyInt = parseInt(accuracy)
+            const latitudeFloat = parseFloat(latitude)
+            const longitudeFloat = parseFloat(longitude)
 
             postCreateRequestDTO = {
                 content: content,
                 location: {
-                    longitude: longitude,
-                    latitude: latitude,
+                    longitude: longitudeFloat,
+                    latitude: latitudeFloat,
                     accuracy: accuracyInt
                 }
             };
