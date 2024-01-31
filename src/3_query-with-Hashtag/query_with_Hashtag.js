@@ -1,67 +1,32 @@
 import { GlobalSettings } from '../global_settings.js';
 
-document.getElementById("personalFeed").checked = false
-let lastPostId = null
-let limit = 2
-let loggedIn = false
-let personalFeed = false
-let token = ""
+let postID;
+let limit = 2;
 
-document.getElementById("personalFeed").addEventListener("change", function () {
-    token = localStorage.getItem('token')
-    if (token === null) { // if user is not logged in, no personal feed
-        personalFeed = false
-        document.getElementById("personalFeed").checked = false
-    } else {
-        loggedIn = true
-        personalFeed = document.getElementById("personalFeed").checked;
-    }
-
-    resetResponse()
+document.getElementById("search").addEventListener("click", function() {
+    searchPosts()
+})
+document.getElementById("nextPage").addEventListener("click", function(){
+    searchPosts()
 })
 
 
-document.getElementById("getFeedButton").addEventListener("click", function () {
-    resetResponse()
-    getFeed()
-})
+function searchPosts() {
+    const hashtag = document.getElementById('Hashtag').value;
+    let url;
+    if(postID){
+        url = GlobalSettings.apiUrl + '/posts?q=' + hashtag +  '&postId=' + postID + '&limit=' + limit;
+    }else{
+        url = GlobalSettings.apiUrl + '/posts?q=' + hashtag + '&limit=' + limit;
+    }   
 
-document.getElementById("nextPage").addEventListener("click", function () {
-    getFeed()
-})
+    const token = localStorage.getItem('token');
 
-function resetResponse() {
-    lastPostId = null
-    document.getElementById('response').innerHTML = ''
-}
-
-function getFeed() {
-
-    // Construct URL
-    let baseUrl = GlobalSettings.apiUrl + '/feed'
-    let paginationUrl
-    let feedTypeUrl
-
-    if (lastPostId === null) {
-        paginationUrl = '?limit=' + limit
-    } else {
-        paginationUrl = '?postId=' + lastPostId + '&limit=' + limit
-    }
-
-    if (loggedIn && personalFeed) {
-        feedTypeUrl = '&feedType=personal'
-    } else {
-        feedTypeUrl = '&feedType=global'
-    }
-
-    const url = baseUrl + paginationUrl + feedTypeUrl
-
-    // Fetch data
     fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
         },
     })
         .then(response => {
@@ -89,7 +54,7 @@ function displayResults(data, statusCode) {
         responseDiv.innerHTML += 'Shown records ' + data.records.length + ' of ' + data.pagination.records + '<br><br>'
 
         data.records.forEach(post => {
-            lastPostId = post.postId
+            postID = post.postId
             const postDiv = document.createElement('div');
 
             let contentHTML

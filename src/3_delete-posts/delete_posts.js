@@ -1,17 +1,19 @@
 import { GlobalSettings } from '../global_settings.js';
 
-document.getElementById("resendTokenButton").addEventListener("click", resendToken)
+document.getElementById("delete").addEventListener("click", function() {deletePosts()})
 
-function resendToken() {
+function deletePosts() {
+    const postID = document.getElementById('PostID').value;
+    const url = GlobalSettings.apiUrl + '/posts/'+ postID;
 
-    const username = document.getElementById('username').value
+    const token = localStorage.getItem('token');
 
-    fetch(GlobalSettings.apiUrl+ '/users/'+username+'/activate', {
+    fetch(url, {
         method: 'DELETE',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token,
         },
-        body: null
     })
         .then(response => {
             if (response.status === 204) {
@@ -33,4 +35,5 @@ function resendToken() {
                     '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
             }
         })
+        .catch(error => console.error('Error:', error));
 }

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Refresh Token</title>
+    <title>Delete Post</title>
     <style>
         .container {
             display: flex;
@@ -16,16 +16,17 @@
 <body>
 <div class="container">
     <div class="form-section">
-        <h1>Refresh Token</h1>
-        <button id="refreshTokenButton">Refresh Token</button>
+        <h1>Query Posts with Hashtag</h1>
+        <label for="Hashtag"></label><input type="text" id="Hashtag" placeholder="Hashtag"><br>
+        <button id="search">search</button>
     </div>
     <div class="response-section">
         <h1>Response</h1>
         <div id="response"></div>
+        <button id="nextPage">Next Page →</button>
     </div>
 </div>
 
-<script type="module" src="refresh_token.js"></script>
+<script type="module" src="query_with_Hashtag.js"></script>
 </body>
 </html>
-

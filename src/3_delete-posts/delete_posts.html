@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Refresh Token</title>
+    <title>Delete Post</title>
     <style>
         .container {
             display: flex;
@@ -16,8 +16,9 @@
 <body>
 <div class="container">
     <div class="form-section">
-        <h1>Refresh Token</h1>
-        <button id="refreshTokenButton">Refresh Token</button>
+        <h1>Delete Post</h1>
+        <label for="PostID"></label><input type="text" id="PostID" placeholder="PostID"><br>
+        <button id="delete">Delete</button>
     </div>
     <div class="response-section">
         <h1>Response</h1>
@@ -25,7 +26,6 @@
     </div>
 </div>
 
-<script type="module" src="refresh_token.js"></script>
+<script type="module" src="delete_posts.js"></script>
 </body>
 </html>
-
