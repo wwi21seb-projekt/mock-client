@@ -7,28 +7,10 @@ function create_post() {
     const image = document.getElementById('image').files[0];
     const token = localStorage.getItem('token')
 
-    const longitude = document.getElementById('longitude').value;
-    const latitude = document.getElementById('latitude').value;
-    const accuracy = document.getElementById('accuracy').value;
-
     if (image == null) {
-        let postCreateRequestDTO
-        if (longitude === "" || latitude === "" || accuracy === "") {
-            postCreateRequestDTO = {
-                content: content
-            };
-        } else {
-            const accuracyInt = parseInt(accuracy)
-
-            postCreateRequestDTO = {
-                content: content,
-                location: {
-                    longitude: longitude,
-                    latitude: latitude,
-                    accuracy: accuracyInt
-                }
-            };
-        }
+        const postCreateRequestDTO = {
+            content: content
+        };
 
         fetch(GlobalSettings.apiUrl+'/posts', {
             method: 'POST',
