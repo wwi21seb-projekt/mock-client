@@ -20,7 +20,7 @@
     <option value="create_post">Create Post</option>
     <option value="account_configuration">Account Configuration</option>
     <option value="user_profile">User Profile</option>
-    <option value="generated_feed">Generated Feed</option>
+    <option value="generated_feed">Feed</option>
 </select>
 
 <div id="imprintSection">
@@ -39,9 +39,10 @@
 </div>
 
 <div id="createPostSection">
-    <h2>Create Post</h2>
+    <h2>Edit Posts</h2>
     <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
     <iframe src="2_posts/create_posts.html" width="100%" height="200px"></iframe>
+    <iframe src="3_delete-posts/delete_posts.html" width="100%" height="200px"></iframe>
 </div>
 
 <div id="accountConfigurationSection">
@@ -59,14 +60,17 @@
     <iframe src="2_user-feed-subscription/visit_user_profile.html" width="100%" height="200px"></iframe>
     <iframe src="2_user-feed-subscription/subscribe_user.html" width="100%" height="200px"></iframe>
     <iframe src="2_user-feed-subscription/unsubscribe_user.html" width="100%" height="200px"></iframe>
+    <iframe src="3_get-subscriptions/get_subscriptions.html" width="100%" height="200px"></iframe>
     <!-- Add more components to 2_account-configuration here -->
 </div>
 
 <div id="generatedFeed">
-    <h2>Generated Feed</h2>
+    <h2>Feed</h2>
     <iframe src="1_login-registration/login.html" width="100%" height="200px"></iframe>
     <iframe src="2_personal-global-feed/personal_global_feed.html" width="100%" height="200px"></iframe>
+    <iframe src="3_query-with-Hashtag/query_with_Hashtag.html" width="100%" height="200px"></iframe>
 </div>
+
 <!-- Add more parts here -->
 
 <script>
@@ -83,7 +87,6 @@
         document.getElementById('userProfile').classList.toggle('hidden', selectedValue !== 'user_profile' && selectedValue !== 'all');
         document.getElementById('generatedFeed').classList.toggle('hidden', selectedValue !== 'generated_feed' && selectedValue !== 'all');
     }
-
 </script>
 </body>
 </html>

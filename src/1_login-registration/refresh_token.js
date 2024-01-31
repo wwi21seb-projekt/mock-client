@@ -3,8 +3,16 @@ import { GlobalSettings } from '../global_settings.js';
 document.getElementById("refreshTokenButton").addEventListener("click", refreshToken)
 
 function refreshToken() {
+    refreshToken = localStorage.getItem('refreshToken') // get refresh token from local storage
+
+    if(refreshToken === null) {
+        document.getElementById('response').innerHTML = '<strong>Status Code:</strong> ' + 'xx' + '<br>' +
+        '<pre>' + JSON.stringify("No refresh token saved", null, 2) + '</pre>';
+        return
+    }
+
     const refreshRequestDTO = {
-        refreshToken: document.getElementById('refreshToken').value,
+        refreshToken: refreshToken,
     };
 
     fetch(GlobalSettings.apiUrl+'/users/refresh', {
