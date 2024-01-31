@@ -89,35 +89,17 @@ function displayResults(data, statusCode) {
         data.records.forEach(post => {
             const postDiv = document.createElement('div');
 
-            let contentHTML
-            if(post.location != null){
-                contentHTML = `
-                    <div class="post-header">
-                        <h3>Post ID: ${post.postId}</h3>
-                    </div>
-                    <div class="post-content">
-                        <p>${post.content}</p>
-                    </div>
-                    <div class="post-footer">
-                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
-                    </div>
-                    <div class="post-footer">
-                        <span>Location: ${post.location.longitude}°, ${post.location.latitude}°, ${post.location.accuracy}m</span>
-                    </div>
-                `;
-            } else {
-                contentHTML = `
-                    <div class="post-header">
-                        <h3>Post ID: ${post.postId}</h3>
-                    </div>
-                    <div class="post-content">
-                        <p>${post.content}</p>
-                    </div>
-                    <div class="post-footer">
-                        <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
-                    </div>
-                    `;
-            }
+            const contentHTML = `
+        <div class="post-header">
+            <h3>Post ID: ${post.postId}</h3>
+        </div>
+        <div class="post-content">
+            <p>${post.content}</p>
+        </div>
+        <div class="post-footer">
+            <span>Creation Date: ${new Date(post.creationDate).toLocaleDateString()}</span>
+        </div>
+    `;
 
             postDiv.innerHTML = contentHTML;
             responseDiv.appendChild(postDiv);

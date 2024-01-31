@@ -28,7 +28,6 @@ function login() {
 
             if (status === 200) {
                 localStorage.setItem('token', json.token); // store token in local storage
-                localStorage.setItem('refreshToken', json.refreshToken); // store refresh token in local storage
             }
         })
         .catch(error => console.error('Error:', error));
